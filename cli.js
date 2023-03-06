@@ -32,32 +32,32 @@ if (args.h) {
 var url = "https://api.open-meteo.com/v1/forecast?";
 
 if (args.n) {
-    north = args.n;
+    north = Math.round(args.n);
     url = url + "latitude=" + north;
 } 
 if(args.s) {
-    south = args.s;
+    south = Math.round(args).s;
     url = url + "latitude=" + south;
 } 
 if (args.e) {
-    east = args.e;
+    east = Math.round(args).e;
     url = url + "&longitude=" + east;
 }
 if (args.w) {
-    west = args.w
+    west = Math.round(args).w
     url = url + "&longitude=" + west;
 
 }
 if (args.z) {
     timezone = args.z;
-    url = url + "&timezone=" + timezone;
-
+   
 } 
 
-
+console.log("TIMEZONE!: " + timezone);
+url = url + "&timezone=" + timezone;
 url = url + "&daily=precipitation_hours";
-
 console.log(url);
+
 const response = await fetch(url);
 const data = await response.json();
 console.log(data);

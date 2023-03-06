@@ -2,6 +2,7 @@
 import minimist from "minimist";
 import moment from "moment-timezone";
 
+
 //Using getopts to parse
 
 const args = minimist(process.argv.slice(2));
@@ -23,6 +24,7 @@ if (args.h) {
 
 var url = "https://api.open-meteo.com/v1/forecast?";
 
+
 if (args.n) {
     if (args.n < 0) {
         args.n *= -1;
@@ -31,9 +33,11 @@ if (args.n) {
     url = url + "latitude=" + args.n;
 } 
 if(args.s) {
+    console.log(args.s);
     if (args.s > 0) {
         args.s *= -1;
     }
+    console.log(args.s);
     args.s = args.s.toFixed(2);
     url = url + "latitude=" + args.s;
 } 
@@ -61,14 +65,22 @@ if (args.z) {
 url = url + "&timezone=" + timezone;
 url = url + "&daily=precipitation_hours";
 
+console.log(url);
 
 const response = await fetch(url);
+
 const data = await response.json();
 
-if (args.j && (args.n || args.s) && (args.w || args.e)) {
+if (data.error) {
+    console.log(data.reason);
+    process.exit(0);
+}
+
+if (args.j) {
     console.log(data);
     process.exit(0);
 }
+
 
 if (data.daily.precipitation_hours[args.d] > 0) {
     output += "You might need your galoshes ";

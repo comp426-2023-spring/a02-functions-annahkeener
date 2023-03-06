@@ -3,11 +3,6 @@ import minimist from "minimist";
 import moment from "moment-timezone";
 
 //Using getopts to parse
-var north = 0;
-var south = 0;
-var east = 0;
-var west = 0;
-var day = 1;
 
 const args = minimist(process.argv.slice(2));
 
@@ -66,31 +61,35 @@ if (args.z) {
 url = url + "&timezone=" + timezone;
 url = url + "&daily=precipitation_hours";
 
+try {
+    const response = await fetch(url);
+    const data = await response.json();
 
-const response = await fetch(url);
-const data = await response.json();
-
-if (data.daily.precipitation_hours[args.d] > 0) {
-    output += "You might need your galoshes ";
-} else {
-        output += "You will not need your galoshes "
+    if (args.j) {
+        console.log(data);
+        process.exit(0);
+    }
+    
+    if (data.daily.precipitation_hours[args.d] > 0) {
+        output += "You might need your galoshes ";
+    } else {
+            output += "You will not need your galoshes "
+    }
+    
+    if (args.d == 0) {
+        output += "today."
+      } else if (args.d > 1) {
+        output += "in " + args.d + " days."
+      } else {
+        output += "tomorrow."
+      }
+    
+    console.log(output);    
+    
+} catch (error) {
+    console.log("there was an error");
 }
 
-if (args.d == 0) {
-    output += "today."
-  } else if (args.d > 1) {
-    output += "in " + args.d + " days."
-  } else {
-    output += "tomorrow."
-  }
-
-
-if (args.j) {
-    console.log(data);
-    process.exit(0);
-}
-
-console.log(output);
 
 
 

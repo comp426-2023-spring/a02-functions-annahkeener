@@ -91,7 +91,7 @@ if (args.d == 0) {
 
 
 if (args.j) {
-    console.log(response);
+    console.log(data);
     process.exit(0);
 }
 

@@ -11,9 +11,6 @@ var day = 1;
 
 const args = minimist(process.argv.slice(2));
 
-
-console.log(args);
-
 var timezone = moment.tz.guess();
 
 var output = "";
@@ -66,14 +63,12 @@ if (args.z) {
    
 } 
 
-console.log("TIMEZONE!: " + timezone);
 url = url + "&timezone=" + timezone;
 url = url + "&daily=precipitation_hours";
-console.log(url);
+
 
 const response = await fetch(url);
 const data = await response.json();
-console.log(data);
 
 if (data.daily.precipitation_hours[args.d] > 0) {
     output += "You might need your galoshes ";
@@ -81,7 +76,6 @@ if (data.daily.precipitation_hours[args.d] > 0) {
         output += "You will not need your galoshes "
 }
 
-console.log("day: " + args.d);
 if (args.d == 0) {
     output += "today."
   } else if (args.d > 1) {

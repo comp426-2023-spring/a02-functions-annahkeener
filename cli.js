@@ -1,18 +1,22 @@
 #!/usr/bin/env node
-import minimist from "minimist"
-//import { exit } from "yargs";
+import minimist from "minimist";
+import moment from "moment-timezone";
 
 //Using getopts to parse
+var north = 0;
+var south = 0;
+var east = 0;
+var west = 0;
+var day = 1;
+
 const args = minimist(process.argv.slice(2));
+
 
 console.log(args);
 
-var OPT_N=false;
-var OPT_S=false;
-var OPT_E=false;
-var OPT_W=false;
+var timezone = moment.tz.guess();
 
-const timezone = moment.tz.guess();
+var output = "";
 
 if (args.h) {
     console.log("Usage: galosh.js [options] -[n|s] LATITUDE -[e|w] LONGITUDE -z TIME_ZONE");
@@ -25,11 +29,65 @@ if (args.h) {
     process.exit(0);
 } 
 
-var url = "";
+var url = "https://api.open-meteo.com/v1/forecast?";
+
+if (args.n) {
+    north = args.n;
+    url = url + "latitude=" + north;
+} 
+if(args.s) {
+    south = args.s;
+    url = url + "latitude=" + south;
+} 
+if (args.e) {
+    east = args.e;
+    url = url + "&longitude=" + east;
+}
+if (args.w) {
+    west = args.w
+    url = url + "&longitude=" + west;
+
+}
+if (args.z) {
+    timezone = args.z;
+    url = url + "&timezone=" + timezone;
+
+} 
+
+
+url = url + "&daily=precipitation_hours";
+
+console.log(url);
+const response = await fetch(url);
+const data = await response.json();
+console.log(data);
+
+if (data.daily.precipitation_hours[args.d] > 0) {
+    output += "You might need your galoshes ";
+} else {
+        output += "You will not need your galoshes "
+}
+
+console.log("day: " + args.d);
+if (args.d == 0) {
+    output += "today."
+  } else if (args.d > 1) {
+    output += "in " + args.d + " days."
+  } else {
+    output += "tomorrow."
+  }
+
+
+if (args.j) {
+    console.log(response);
+    process.exit(0);
+}
+
+console.log(output);
 
 
 
-//const response = await fetch(url);
+
 
 
 

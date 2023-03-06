@@ -61,35 +61,33 @@ if (args.z) {
 url = url + "&timezone=" + timezone;
 url = url + "&daily=precipitation_hours";
 
-try {
-    const response = await fetch(url);
-    const data = await response.json();
 
-    if (args.j) {
-        console.log(data);
-        process.exit(0);
-    }
-    
-    if (data.daily.precipitation_hours[args.d] > 0) {
-        output += "You might need your galoshes ";
-    } else {
-            output += "You will not need your galoshes "
-    }
-    
-    if (args.d == 0) {
-        output += "today."
-      } else if (args.d > 1) {
-        output += "in " + args.d + " days."
-      } else {
-        output += "tomorrow."
-      }
-    
-    console.log(output);    
-    
-} catch (error) {
-    console.log("there was an error");
+const response = await fetch(url);
+const data = await response.json();
+
+if (args.j && (args.n || args.s) && (args.w || args.e)) {
+    console.log(data);
+    process.exit(0);
 }
 
+if (data.daily.precipitation_hours[args.d] > 0) {
+    output += "You might need your galoshes ";
+} else {
+        output += "You will not need your galoshes "
+}
+
+if (args.d == 0) {
+    output += "today."
+  } else if (args.d > 1) {
+    output += "in " + args.d + " days."
+  } else {
+    output += "tomorrow."
+  }
+
+
+
+
+console.log(output);
 
 
 

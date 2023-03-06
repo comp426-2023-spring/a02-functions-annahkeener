@@ -32,33 +32,33 @@ if (args.h) {
 var url = "https://api.open-meteo.com/v1/forecast?";
 
 if (args.n) {
-    north = args.n.toFixed(2);
-    if (north < 0) {
-        north *= -1;
+    if (args.n < 0) {
+        args.n *= -1;
     }
-    url = url + "latitude=" + north;
+    args.n = args.n.toFixed(2);
+    url = url + "latitude=" + args.n;
 } 
 if(args.s) {
-    south = args.s.toFixed(2);
-    if (south > 0) {
-        south *= -1;
+    if (args.s > 0) {
+        args.s *= -1;
     }
-    url = url + "latitude=" + south;
+    args.s = args.s.toFixed(2);
+    url = url + "latitude=" + args.s;
 } 
 if (args.e) {
-    east = args.e.toFixed(2);
-    if (east < 0) {
-        east *= -1;
+    if (args.e < 0) {
+        args.e *= -1;
     }
-    url = url + "&longitude=" + east;
-    console.log("EAST DATATYPE: " + typeof east);
+    args.e = args.e.toFixed(2);
+    url = url + "&longitude=" + args.e;
 }
 if (args.w) {
-    west = args.w.toFixed(2);
-    if (west > 0) {
-        west *= -1;
+    if (args.w > 0) {
+        args.w *= -1;
     }
-    url = url + "&longitude=" + west;
+    args.w = args.w.toFixed(2);
+    url = url + "&longitude=" + args.w;
+    
 
 }
 if (args.z) {

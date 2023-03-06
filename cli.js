@@ -33,18 +33,30 @@ var url = "https://api.open-meteo.com/v1/forecast?";
 
 if (args.n) {
     north = args.n.toFixed(2);
+    if (north < 0) {
+        north * -1;
+    }
     url = url + "latitude=" + north;
 } 
 if(args.s) {
     south = args.s.toFixed(2);
+    if (south > 0) {
+        south * -1;
+    }
     url = url + "latitude=" + south;
 } 
 if (args.e) {
     east = args.e.toFixed(2);
+    if (east < 0) {
+        east * -1;
+    }
     url = url + "&longitude=" + east;
 }
 if (args.w) {
     west = args.w.toFixed(2);
+    if (west > 0) {
+        west * -1;
+    }
     url = url + "&longitude=" + west;
 
 }

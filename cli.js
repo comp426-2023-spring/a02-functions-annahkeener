@@ -32,19 +32,19 @@ if (args.h) {
 var url = "https://api.open-meteo.com/v1/forecast?";
 
 if (args.n) {
-    north = Math.round(args.n);
+    north = args.n.toFixed(2);
     url = url + "latitude=" + north;
 } 
 if(args.s) {
-    south = Math.round(args).s;
+    south = args.s.toFixed(2);
     url = url + "latitude=" + south;
 } 
 if (args.e) {
-    east = Math.round(args).e;
+    east = args.e.toFixed(2);
     url = url + "&longitude=" + east;
 }
 if (args.w) {
-    west = Math.round(args).w
+    west = args.w.toFixed(2);
     url = url + "&longitude=" + west;
 
 }
